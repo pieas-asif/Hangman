@@ -1,16 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
+#include <time.h>
 
 void welcome();
-char *get_word(int);
+int get_word(char *, int);
 
 int main(int argc, char const *argv[])
 {
     welcome();
 
-    // Choosing difficulity in Game
+    // Setting up variables
+    char game_word[256];
     int difficulity = 1;
+    int check_ok;
+    int word_len;
+
+    // Choosing difficulity in Game
     if (argc != 1)
     {
         switch (argv[1][1])
@@ -41,9 +48,15 @@ int main(int argc, char const *argv[])
     }
 
     // Getting a Random Word For Hangman
-    char *game_word = get_word(difficulity);
-    printf("%s\n", game_word);
-
+    check_ok = get_word(game_word, difficulity);
+    if (!check_ok)
+    {
+        puts("ERROR: Unable to get word. Exiting...");
+        sleep(1);
+    }
+    word_len = (int)strlen(game_word);
+    printf("WORD: %s\n", game_word);
+    printf("WORD_LEN: %d\n", word_len);
     return 0;
 }
 
@@ -53,9 +66,11 @@ void welcome()
     sleep(1);
 }
 
-char *get_word(int d)
+int get_word(char game_word[], int d)
 {
     FILE *file;
+    int n_words, i = 0, random_n;
+    char line[256];
     switch (d)
     {
     case 1:
@@ -71,6 +86,29 @@ char *get_word(int d)
         file = fopen("easy.txt", "r");
         break;
     }
+    if (file == NULL)
+    {
+        return 0;
+    }
+    while (fgets(line, 255, file))
+    {
+        if (i == 0)
+        {
+            sscanf(line, "%d", &n_words);
+            srand((unsigned)time(NULL));
+            random_n = (rand() % n_words) + 1;
+            i++;
+        }
+        else
+        {
+            if (i == random_n)
+            {
+                sscanf(line, "%s", game_word);
+                break;
+            }
+            i++;
+        }
+    }
     fclose(file);
-    return "JohnCena";
+    return 1;
 }

@@ -59,17 +59,18 @@ int main(int argc, char const *argv[])
         sleep(1);
     }
     word_len = (int)strlen(game_word);
-    printf("WORD: %s\n", game_word);
-    printf("WORD_LEN: %d\n", word_len);
 
+    // Run the game and Get if the user got the word
     check_ok = run_game(game_word, word_len);
     if (check_ok)
     {
+        printf("WORD: %s\n", game_word);
         puts("You've won the game. Run it to play again.");
     }
     else
     {
         puts("You've lost the game. Try again.");
+        printf("Correct WORD: %s\n", game_word);
     }
 
     return 0;

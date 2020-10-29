@@ -1,4 +1,4 @@
-8
+17
 apple
 bird
 computer
@@ -7,3 +7,12 @@ lime
 keyboard
 mango
 love
+people
+thing
+time
+day
+man
+woman
+child
+ball
+bat

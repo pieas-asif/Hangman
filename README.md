@@ -4,15 +4,20 @@ I cool little Hangman Game written in **C**.
 
 ### Important
 
-**This program won't run on Windows.**  
+**To run this on Windows, Please compile the _main.windows.c_ file.**  
 _Documention will be available Soon_
 
 ### How to RUN
 
 To run this program, open a terminal at its root directory.  
-run
+run (on Unix system)
 
 > `make`  
+> `./hangman -e`
+
+run (on Windows)
+
+> `make windows`  
 > `./hangman -e`
 
 -e is present for easy mode.  

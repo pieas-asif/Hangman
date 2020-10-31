@@ -5,6 +5,20 @@
 #include <time.h>
 #include <ctype.h>
 
+#define RED "\033[0;31m"
+#define BOLDRED "\033[1;31m"
+#define GREEN "\033[0;32m"
+#define BOLDGREEN "\033[1;32m"
+#define YELLOW "\033[0;33m"
+#define BOLDYELLOW "\033[1;33m"
+#define BLUE "\033[0;34m"
+#define BOLDBLUE "\033[1;34m"
+#define MAGENTA "\033[0;35m"
+#define BOLDMAGENTA "\033[1;35m"
+#define CYAN "\033[0;36m"
+#define BOLDCYAN "\033[1;36m"
+#define RESET "\033[0m"
+
 void welcome();
 int get_word(char *, int);
 int run_game(char *, int);
@@ -36,26 +50,26 @@ int main(int argc, char const *argv[])
             difficulity = 3;
             break;
         default:
-            puts("Wrong argument(s) were passed.");
-            puts("  run \"./hangman -e\" for easy difficulity");
-            puts("  run \"./hangman -m\" for medium difficulity");
-            puts("  run \"./hangman -h\" for hard difficulity");
+            puts(MAGENTA "Wrong argument(s) were passed." RESET);
+            puts(YELLOW "  run \"./hangman -e\" for easy difficulity" RESET);
+            puts(YELLOW "  run \"./hangman -m\" for medium difficulity" RESET);
+            puts(YELLOW "  run \"./hangman -h\" for hard difficulity" RESET);
             break;
         }
     }
     else
     {
-        puts("No argument(s) were passed.");
-        puts("  run \"./hangman -e\" for easy difficulity");
-        puts("  run \"./hangman -m\" for medium difficulity");
-        puts("  run \"./hangman -h\" for hard difficulity");
+        puts(MAGENTA "No argument(s) were passed." RESET);
+        puts(YELLOW "  run \"./hangman -e\" for easy difficulity" RESET);
+        puts(YELLOW "  run \"./hangman -m\" for medium difficulity" RESET);
+        puts(YELLOW "  run \"./hangman -h\" for hard difficulity" RESET);
     }
 
     // Getting a Random Word For Hangman
     check_ok = get_word(game_word, difficulity);
     if (!check_ok)
     {
-        puts("ERROR: Unable to get word. Exiting...");
+        puts(RED "ERROR: Unable to get word. Exiting..." RESET);
         sleep(1);
     }
     word_len = (int)strlen(game_word);
@@ -64,13 +78,17 @@ int main(int argc, char const *argv[])
     check_ok = run_game(game_word, word_len);
     if (check_ok)
     {
-        printf("WORD: %s\n", game_word);
-        puts("You've won the game. Run it to play again.");
+        printf(BOLDYELLOW "WORD: %s\n" RESET, game_word);
+        puts(BOLDGREEN "You've won the game. Run it to play again." RESET);
+        sleep(3);
+        system("clear");
     }
     else
     {
-        puts("You've lost the game. Try again.");
-        printf("Correct WORD: %s\n", game_word);
+        puts(BOLDMAGENTA "You've lost the game. Try again." RESET);
+        printf(BOLDYELLOW "Correct WORD: %s\n" RESET, game_word);
+        sleep(3);
+        system("clear");
     }
 
     return 0;
@@ -78,7 +96,8 @@ int main(int argc, char const *argv[])
 
 void welcome()
 {
-    puts("Welcome to the game of Hangman");
+    system("clear");
+    puts(BOLDGREEN "Welcome to the game of Hangman" RESET);
     sleep(1);
 }
 
@@ -104,6 +123,7 @@ int get_word(char game_word[], int d)
     }
     if (file == NULL)
     {
+        puts(RED "Cannot Open Dictionary. Game is Exiting." RESET);
         return 0;
     }
     while (fgets(line, 255, file))
@@ -147,8 +167,8 @@ int run_game(char game_word[], int l)
     while (life_left != 0 && is_blank_available(blanks))
     {
         correct_guess = 0;
-        puts("Enter a character, Try to guess the word.");
-        printf("So far you've guessed: %s\n", word_guessed);
+        puts(CYAN "Enter a character, Try to guess the word." RESET);
+        printf(YELLOW "So far you've guessed: %s\n" RESET, word_guessed);
         printf("WORD: %s\n", blanks);
         printf("INPUT: ");
         scanf("%c", &input_c);
@@ -160,14 +180,17 @@ int run_game(char game_word[], int l)
             {
                 blanks[i] = input_c;
                 correct_guess = 1;
-                printf("\n\n");
             }
         }
         if (!correct_guess)
         {
-            puts("You've guessed wrong.");
+            puts(MAGENTA "You've guessed wrong." RESET);
             life_left--;
             printf("LIFE LEFT: %d\n\n", life_left);
+        }
+        else
+        {
+            printf(GREEN "You've guessed correctly.\n\n" RESET);
         }
     }
     if (life_left == 0)

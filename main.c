@@ -24,6 +24,7 @@ int get_word(char *, int);
 int run_game(char *, int);
 void put_into_string(char, char *);
 int is_blank_available(char *);
+void ascii_art_hangman(int);
 
 int main(int argc, char const *argv[])
 {
@@ -85,6 +86,9 @@ int main(int argc, char const *argv[])
     }
     else
     {
+        printf(BOLDMAGENTA);
+        ascii_art_hangman(0);
+        printf(RESET);
         puts(BOLDMAGENTA "You've lost the game. Try again." RESET);
         printf(BOLDYELLOW "Correct WORD: %s\n" RESET, game_word);
         sleep(3);
@@ -94,10 +98,93 @@ int main(int argc, char const *argv[])
     return 0;
 }
 
+void ascii_art_hangman(int ll)
+{
+    if (ll == 0)
+    {
+        puts("      _______");
+        puts("      |/    |");
+        puts("      |    (_)");
+        puts("      |    \\|/");
+        puts("      |     |");
+        puts("      |    / \\");
+        puts("      |");
+        puts("    _ | ___");
+    }
+    if (ll == 1)
+    {
+        puts("      _______");
+        puts("      |/    |");
+        puts("      |    (_)");
+        puts("      |    \\|/");
+        puts("      |     |");
+        puts("      |    /");
+        puts("      |");
+        puts("    _ | ___");
+    }
+    if (ll == 2)
+    {
+        puts("      _______");
+        puts("      |/    |");
+        puts("      |    (_)");
+        puts("      |    \\|/");
+        puts("      |     |");
+        puts("      |");
+        puts("      |");
+        puts("    _ | ___");
+    }
+    if (ll == 3)
+    {
+        puts("      _______");
+        puts("      |/    |");
+        puts("      |    (_)");
+        puts("      |     |/");
+        puts("      |     |");
+        puts("      |");
+        puts("      |");
+        puts("    _ | ___");
+    }
+    if (ll == 4)
+    {
+        puts("      _______");
+        puts("      |/    |");
+        puts("      |    (_)");
+        puts("      |     | ");
+        puts("      |     |");
+        puts("      |");
+        puts("      |");
+        puts("    _ | ___");
+    }
+    if (ll == 5)
+    {
+        puts("      _______");
+        puts("      |/    |");
+        puts("      |    (_)");
+        puts("      |");
+        puts("      |");
+        puts("      |");
+        puts("      |");
+        puts("    _ | ___");
+    }
+    if (ll == 6)
+    {
+        puts("      _______");
+        puts("      |/    |");
+        puts("      |");
+        puts("      |");
+        puts("      |");
+        puts("      |");
+        puts("      |");
+        puts("    _ | ___");
+    }
+}
+
 void welcome()
 {
     system("clear");
-    puts(BOLDGREEN "Welcome to the game of Hangman" RESET);
+    puts(BOLDYELLOW "▬▬▬▬▬▬▬▬▬▬▬▬▬▬ஜ۩۞۩ஜ▬▬▬▬▬▬▬▬▬▬▬▬▬▬" RESET);
+    puts(BOLDGREEN " Welcome to the game of Hangman " RESET);
+    puts(BOLDYELLOW "▬▬▬▬▬▬▬▬▬▬▬▬▬▬ஜ۩۞۩ஜ▬▬▬▬▬▬▬▬▬▬▬▬▬▬" RESET);
     sleep(1);
 }
 
@@ -167,6 +254,9 @@ int run_game(char game_word[], int l)
     while (life_left != 0 && is_blank_available(blanks))
     {
         correct_guess = 0;
+        printf(MAGENTA "\n\n");
+        ascii_art_hangman(life_left);
+        printf(RESET);
         puts(CYAN "Enter a character, Try to guess the word." RESET);
         printf(YELLOW "So far you've guessed: %s\n" RESET, word_guessed);
         printf("WORD: %s\n", blanks);

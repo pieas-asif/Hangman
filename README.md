@@ -1,6 +1,6 @@
 # Hangman
 
-I cool little Hangman Game written in **C**.
+A cool little Hangman Game written in **C**.
 
 ### Important
 
@@ -20,7 +20,7 @@ run (on Windows)
 > `make windows`  
 > `./hangman -e`
 
--e is present for easy mode.  
+-e is passed for easy mode.  
 also, you can pass -m or -h for medium and hard mode.
 
 ### Checkpoints
